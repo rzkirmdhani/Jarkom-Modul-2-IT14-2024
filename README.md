@@ -100,4 +100,72 @@ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 192.240.0.0/16
 ```
 ## No.2
 ### Scrip
-* 
+* /root/scrip.sh
+```
+apt-get update
+apt-get install dnsutils bind9 -y
+```
+### Config
+* etc/bind/named.conf.local
+```
+zone "airdrop.it14.com" {
+        type master;
+        file "/etc/bind/it14/airdrop.it14.com";
+};
+```
+### Lakukan sebelum config DNS
+```
+cp /etc/bind/db.local /etc/bind/it14/name.it14.com
+```
+### Restart setelah config
+
+```
+service bind9 restart
+```
+
+### Config DNS
+
+- /etc/bind/it14/airdrop.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     airdrop.it14.com. root.airdrop.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      airdrop.it14.com.
+@             IN      A       192.240.1.3 ; IP airdrop
+www           IN      CNAME   airdrop.it14.com.
+```
+
+- Ubah nameserver client Rohzok ke Pochinki
+
+```
+#nameserver 192.168.122.1
+nameserver 192.240.3.2
+```
+
+- testing di Ruins
+
+```
+ping airdrop.it14.com
+```
+
+- Ubah nameserver client School ke Pochinki
+
+```
+#nameserver 192.168.122.1
+nameserver 192.240.3.2
+```
+
+- testing di School
+
+```
+ping airdrop.it14.com
+```
