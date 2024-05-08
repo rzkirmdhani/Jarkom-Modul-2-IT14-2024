@@ -250,7 +250,7 @@ zone "1.67.10.in-addr.arpa" {
 };
 ```
 
-- /etc/bind/it07/1.67.10.in-addr.arpa
+- /etc/bind/it14/1.67.10.in-addr.arpa
 
 ```
 ;
@@ -363,4 +363,70 @@ $TTL    604800
 @             IN      NS      loot.it14.com.
 @             IN      A       192.240.2.3 ; IP loot
 www           IN      CNAME   loot.it14.com.
+```
+## No.8
+
+- tambahkan /etc/bind/it14/airdrop.it14.com
+
+```
+medkit        IN      A       192.240.1.4
+www.medkit    IN      CNAME   medkit.airdrop.it14.com.
+```
+
+## No.9
+
+#### Pochinki
+
+- tambahkan /etc/bind/it14/redzone.it14.com
+
+```
+ns1           IN      A       192.240.2.2 ; IP Georgopol
+siren         IN      NS      ns1
+```
+
+- tambahkan ini di /etc/bind/named.conf.options
+
+```
+allow-query{any;};
+```
+
+#### Di Georgopol
+
+- /etc/bind/named.conf.local
+
+```
+zone "siren.redzone.it14.com" {
+    type master;
+    file "/etc/bind/it14/siren.redzone.it14.com";
+    allow-transfer { 192.240.3.2; };
+};
+```
+
+- /etc/bind/it14/siren.redzone.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     siren.redzone.it14.com. root.siren.redzone.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      siren.redzone.it14.com.
+; DNS Records
+@           IN      A       192.240.1.2
+www         IN      CNAME   siren.redzone.it14.com.
+```
+
+## No. 10
+
+- tambahkan ini di georgopol /etc/bind/it14/siren.redzone.it14.com
+
+```
+log         IN      A       192.240.1.2 ; IP Serverny
+www.log     IN      CNAME   log.siren.redzone.it14.com.
 ```
