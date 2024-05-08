@@ -98,6 +98,7 @@ iface eth0 inet static
 ```
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 192.240.0.0/16
 ```
+## Topologi - it14
 ![topologidni](https://github.com/rzkirmdhani/Jarkom-Modul-2-IT14-2024/assets/141987387/33ce5871-2f13-4fe7-8bdf-c26e71b4edae)
 
 ## No.2
