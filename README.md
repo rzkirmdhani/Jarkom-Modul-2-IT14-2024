@@ -95,8 +95,9 @@ iface eth0 inet static
         gateway 192.240.2.1
 ```
 ### Menambahkan di Router - Erangel
+```
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 192.240.0.0/16
-
+```
 ## No.2
 ### Scrip
 * 
