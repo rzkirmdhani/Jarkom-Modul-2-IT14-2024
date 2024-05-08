@@ -3,7 +3,7 @@
 | No. | Nama Anggota | NRP |
 | :---         |     :---:      |          ---: |
 | 1.   | Rizki Ramadhani     | 5027221013    |
-| git diff     | git diff       | git diff      |
+| 2.     | Zidny Ilman Nafi'an       | 5027221072      |
 
 ## NO.1
 ### Konfigurasi GNS3
