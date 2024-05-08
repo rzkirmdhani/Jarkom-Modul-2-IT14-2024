@@ -171,3 +171,65 @@ nameserver 192.240.3.2
 ```
 ping airdrop.it14.com
 ```
+## No.3
+
+### Konfigurasi DNS
+
+- /etc/bind/named.conf.local
+
+```
+zone "redzone.it14.com" {
+        type master;
+        file "/etc/bind/it14/redzone.it14.com";
+};
+```
+
+- /etc/bind/it14/redzone.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     redzone.it14.com. root.redzone.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      redzone.it14.com.
+@             IN      A       192.240.1.2 ; IP redzone
+www           IN      CNAME   redzone.it14.com.
+```
+## No.4
+
+### Konfigurasi DNS
+
+- /etc/bind/named.conf.local
+
+```
+zone "loot.it14.com" {
+        type master;
+        file "/etc/bind/it14/loot.it14.com";
+};
+```
+
+- /etc/bind/it14/loot.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     loot.it14.com. root.loot.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      loot.it14.com.
+@             IN      A       192.240.2.3 ; IP loot
+www           IN      CNAME   loot.it14.com.
+```
