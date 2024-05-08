@@ -233,3 +233,134 @@ $TTL    604800
 @             IN      A       192.240.2.3 ; IP loot
 www           IN      CNAME   loot.it14.com.
 ```
+## No. 5
+
+Tes Rohzok sama School
+
+## No. 6
+
+### Konfigurasi Reverse DNS
+
+- /etc/bind/named.conf.local
+
+```
+zone "1.67.10.in-addr.arpa" {
+        type master;
+        file "/etc/bind/it14/1.67.10.in-addr.arpa";
+};
+```
+
+- /etc/bind/it07/1.67.10.in-addr.arpa
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     redzone.it14.com. root.redzone.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+; PTR Records
+1.67.10.in-addr.arpa.    IN      NS      redzone.it14.com.
+2                        IN      PTR     redzone.it14.com.
+```
+
+### Periksa caranya
+
+```
+host -t PTR 192.240.1.2
+```
+
+## No.7
+
+- Tambahkan di semua zone /etc/bind/named.conf.local
+
+```
+notify yes;
+        also-notify { 192.240.2.2; };
+        allow-transfer {192.240.2.2; };
+```
+
+### Konfigurasi di Georgopol
+
+- /etc/bind/named.conf.local
+
+```
+zone "airdrop.it14.com" {
+    type slave;
+    masters { 192.240.3.2; };
+    file "/etc/bind/it14/slave.airdrop.it14.com";
+};
+
+zone "redzone.it14.com" {
+    type slave;
+    masters { 192.240.3.2; };
+    file "/etc/bind/it14/slave.redzone.it14.com";
+};
+
+zone "loot.it14.com" {
+    type slave;
+    masters { 192.240.3.2; };
+    file "/etc/bind/it14/slave.loot.it14.com";
+};
+```
+
+- /etc/bind/it14/slave.airdrop.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     airdrop.it14.com. root.airdrop.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      airdrop.it14.com.
+@             IN      A       192.240.1.3 ; IP airdrop
+www           IN      CNAME   airdrop.it14.com.
+```
+
+- /etc/bind/it14/slave.redzone.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     redzone.it14.com. root.redzone.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      redzone.it14.com.
+@             IN      A       192.240.1.2 ; IP redzone
+www           IN      CNAME   redzone.it14.com.
+```
+
+- /etc/bind/it14/slave.loot.it14.com
+
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     loot.it14.com. root.loot.it14.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      loot.it14.com.
+@             IN      A       192.240.2.3 ; IP loot
+www           IN      CNAME   loot.it14.com.
+```
